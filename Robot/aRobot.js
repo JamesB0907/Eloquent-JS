@@ -245,6 +245,16 @@ console.log(compareRobots(goalOrientedRobot, [], randomRobot, []));
 
 console.log(runRobot(VillageState.random(), goalOrientedRobot, []));
 
-function betterGoalOrientedRobot() {
-
+function lazyRobot({place, parcels}, route) {
+    if (route.length == 0) {
+        routes = parcels.map(parcel => {
+            if (parcel.place != place) {
+                return {route: findRoute(roadGraph, place, parcel.place), pickup: true};
+            } else {
+                return {route: findRoute(roadGraph, place, parcel.address),
+                pickup: false};
+                }
+            });
+    }
+    return {direction: route[0], memory: route.slice(1)};
 }
