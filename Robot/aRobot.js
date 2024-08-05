@@ -243,7 +243,7 @@ console.log(compareRobots(goalOrientedRobot, [], randomRobot, []));
     Robot Efficiency
 */
 
-console.log(runRobot(VillageState.random(), goalOrientedRobot, []));
+// console.log(runRobot(VillageState.random(), goalOrientedRobot, []));
 
 function lazyRobot({place, parcels}, route) {
     if (route.length == 0) {
@@ -258,3 +258,5 @@ function lazyRobot({place, parcels}, route) {
     }
     return {direction: route[0], memory: route.slice(1)};
 }
+
+console.log(compareRobots(goalOrientedRobot, [], lazyRobot, []));
