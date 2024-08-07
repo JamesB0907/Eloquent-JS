@@ -255,8 +255,48 @@ function lazyRobot({place, parcels}, route) {
                 pickup: false};
                 }
             });
+            function score({route, pickup}) {
+                return (pickup ? 0.5 : 0) - route.length;
+            }
+            route = routes.reduce((a, b) => score(a) > score(b) ? a : b).route;
     }
     return {direction: route[0], memory: route.slice(1)};
 }
 
 console.log(compareRobots(goalOrientedRobot, [], lazyRobot, []));
+
+/*
+    Persistent Group
+*/
+
+class PGroup {
+    #members;
+    constructor(members) {
+        this.#members = members;
+    }
+
+    // The add method will return a new PGroup object with the added value
+    add(value) {
+        if (this.has(value)) return this;
+        // Concat returns a new array with the added value
+        else return new PGroup(this.#members.concat([value]));
+    }
+
+    delete(value) {
+        // The filter method will return a new array with the value removed
+        return new PGroup (this.#members.filter(m => m !== value));
+    }
+
+    has(value) {
+        if (this.#members.includes(value)) return true;
+        else return false;
+    }
+
+    static empty = new PGroup([]);
+}
+
+let firstValue = PGroup.empty.add("first");
+let secondValue = firstValue.add("second");
+firstValue = firstValue.delete("first");
+console.log(firstValue.has("first")); // -> false
+console.log(secondValue.has("first")); // -> true
