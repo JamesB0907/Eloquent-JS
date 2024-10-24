@@ -53,10 +53,9 @@ fifteen.then((value) => console.log(`Got ${value}`));
 
 function readFile(file) {
   return new Promise((resolve) => {
-    readTextFile(file, (content) => resolve(text));
+    readTextFile(file, (content) => resolve(content));
   });
 }
-
 textFile("plans.txt").then(console.log);
 
 // The 'then' method is used to handle the result of the promise. It takes a function as an argument that will be called when the promise is resolved.
@@ -67,6 +66,7 @@ function randomFile(listFile) {
     .then((ls) => ls[Math.floor(Math.random() * ls.length)])
     .then((filename) => textFile(filename));
 }
+
 
 // This function stops the execution of the code until the promise is resolved. This can be useful if you need to wait for the result of an asynchronous operation before continuing.
 
