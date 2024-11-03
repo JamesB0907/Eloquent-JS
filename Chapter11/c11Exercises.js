@@ -2,6 +2,39 @@
 
 // Quiet Times:
 
+// Activity is stored in "camera_logs.txt"
+// Theoretically, we could read the logs and count the activity per hour for 24 hours 
+// ...and do that 7 times
+
+/*
+  1695709940692
+  1695701068331
+  1695701189163
+  ...
+*/
+
+// 1. Looping through the raw timestamps
+// 2. For each time it find a new timestamp, convert the timestamp to a Date object using new Date(Number(timestamp))
+// 3. Parse the date object to get the day of the week using getDay()
+// 4. Increment the corresponding hour in the table if the day of the week matches the specified day
+/* 
+[
+  day1: 
+    {
+      1: true,
+      2: false,
+      3: true,
+      4: true,
+      5:true,
+      ...
+    }
+  },
+  {day2: ...},
+  ...
+  {day7: ...}
+]
+*/
+
 async function activityTable(day) {
   let table = [];
   // Initialize the table with 24 zeros, one for each hour of the day
@@ -14,7 +47,7 @@ async function activityTable(day) {
     let log = await textFile(filename);
     for (let timestamp of log.split("\n")) {
       // Convert the timestamp to a Date object
-      let date = new Date(Number(timestamp));
+      let date = new Date(Number(timestamp)); // date object looks like: Mon Jan 25 2024 12:00:00 GMT-0800 (Pacific Standard Time)
       // If the log entry is from the specified day, increment the corresponding hour in the table
       if (date.getDay() == day) {
         table[date.getHours()]++;
