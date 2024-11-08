@@ -18,12 +18,12 @@
 // >(x, 5) from this example could be represented like this:
 /*
     {
-    type: "apply",
-    operator: {type: "word", name: ">"},
-    args: [
-        {type: "word", name: "x"},
-        {type: "value", value: 5}
-        ]
+        type: "apply",
+        operator: {type: "word", name: ">"},
+        args: [
+            {type: "word", name: "x"},
+            {type: "value", value: 5}
+            ]
     }
 */
 
@@ -96,21 +96,22 @@ function skipSpace(string) {
 function parseApply(expr, program) {
     // Remove leading whitespace from the program string
     program = skipSpace(program);
+    // Check if the program does not start with an opening parenthesis
     if (program[0] != "(") {
         // If the program does not start with an opening parenthesis, return the expression
         return {expr: expr, rest: program};
     }
     // Otherwise, skip the opening parenthesis
-    program = skipSpace(program.slice(1));
+    program = skipSpace(program.slice(1)); 
     // Create an empty expression object with type "apply"
     expr = {type: "apply", operator: expr, args: []};
     // Continue parsing the arguments of the application
     while (program[0] != ")") {
         // Parse the next expression and add it to the arguments array
         let arg = parseExpression(program);
-        expr.args.push(arg.expr);
+        expr.args.push(arg.expr); // [] + {type: "value", value: 10} = [{type: "value", value: 10}, ...]
         // Update the program string to the remaining part after the parsed expression
-        program = skipSpace(arg.rest);
+        program = skipSpace(arg.rest); 
         // If the program continues with a comma, skip it and continue parsing arguments
         if (program[0] == ",") {
             // Skip the comma and any leading whitespace
@@ -293,6 +294,16 @@ do(define(total, 0),
    print(total))
 `);
 
+function exampleEggProgram() {
+    let total = 0;
+    let count = 1;
+    while (count < 11) {
+        total += count
+        count = count + 1;
+    }
+    console.log(total);
+} // 55
+
 
 // Functions:
 
@@ -326,12 +337,25 @@ specialForms.fun = (args, scope) => {
     };
 };
 
+//making a function in javacript
+
+function exampleJSFunctionThatDoesNothing () {
+    //local scope
+    return;
+}
+
+
 // The 'fun' special form takes a list of parameter names and a body expression. It creates a function that takes the arguments and scope, creates a new scope with the parameter bindings, and evaluates the body expression in the new scope.
 
 run(`
 do(define(plusOne, fun(a, +(a, 1))),
    print(plusOne(10)))
 `); // 11
+
+//Rewritten in JavaScript
+const plusOne = (a) => {
+    return a + 1;
+};
 
 run(`
 do(define(pow, fun(base, exp,
@@ -340,6 +364,17 @@ do(define(pow, fun(base, exp,
         *(base, pow(base, -(exp, 1)))))),
    print(pow(2, 10)))
 `); // 1024
+
+// Rewritten in JavaScript
+const pow = (base, exp) => {
+    if (exp === 0) {
+        return 1;
+    } else {
+        return base * pow(base, exp - 1);
+    }
+};
+
+pow(2, 10); // 1024
 
 // Compilation:
 
