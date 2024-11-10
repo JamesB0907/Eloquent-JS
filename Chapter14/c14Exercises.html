@@ -1,0 +1,155 @@
+<!-- Chapter 14 Excercises -->
+
+<!--Build a Table-->
+
+<h1>Mountains</h1>
+
+<div id="mountains"></div>
+
+<script>
+// Array of mountain objects with name, height, and place properties
+const MOUNTAINS = [
+    {name: "Kilimanjaro", height: 5895, place: "Tanzania"},
+    {name: "Everest", height: 8848, place: "Nepal"},
+    {name: "Mount Fuji", height: 3776, place: "Japan"},
+    {name: "Vaalserberg", height: 323, place: "Netherlands"},
+    {name: "Denali", height: 6168, place: "United States"},
+    {name: "Popocatepetl", height: 5465, place: "Mexico"},
+    {name: "Mont Blanc", height: 4808, place: "Italy/France"}
+];
+
+// Function to build a table from an array of objects
+function buildTable(data) {
+    // Create a table element
+    let table = document.createElement("table");
+
+    // Get the keys of the first object to use as table headers
+    let fields = Object.keys(data[0]);
+    let headRow = document.createElement("tr");
+    fields.forEach(function(field) {
+        // Create a table header cell for each key
+        let headCell = document.createElement("th");
+        headCell.appendChild(document.createTextNode(field));
+        headRow.appendChild(headCell);
+    });
+    // Append the header row to the table
+    table.appendChild(headRow);
+
+    // Create a row for each object in the data array
+    data.forEach(function(object) {
+        let row = document.createElement("tr");
+        fields.forEach(function(field) {
+            // Create a table cell for each value in the object
+            let cell = document.createElement("td");
+            cell.appendChild(document.createTextNode(object[field]));
+            // Align text to the right if the value is a number
+            if (typeof object[field] == "number") {
+                cell.style.textAlign = "right";
+            }
+            row.appendChild(cell);
+        });
+        // Append the row to the table
+        table.appendChild(row);
+    });
+
+    // Return the constructed table
+    return table;
+}
+
+// Append the built table to the div with id "mountains"
+document.querySelector("#mountains")
+    .appendChild(buildTable(MOUNTAINS));
+</script>
+<p></p>
+<p>___________________________________</p>
+<p></p>
+
+<!-- Elements By Tag Name-->
+<!doctype html>
+
+<h1>Heading with a <span>span</span> element.</h1>
+<p>A paragraph with <span>one</span>, <span>two</span>
+    spans.</p>
+
+<script>
+    // Function to find all elements with a specific tag name within a given node
+    function byTagName(node, tagName) {
+        let found = [];
+        tagName = tagName.toUpperCase();
+
+        // Recursive function to explore all child nodes
+        function explore(node) {
+            for (let i = 0; i < node.childNodes.length; i++) {
+                let child = node.childNodes[i];
+                if (child.nodeType == document.ELEMENT_NODE) {
+                    // If the child's tag name matches, add it to the found array
+                    if (child.nodeName == tagName) found.push(child);
+                    // Recursively explore the child's children
+                    explore(child);
+                }
+            }
+        }
+
+        // Start exploring from the given node
+        explore(node);
+        return found;
+    }
+
+    // Log the number of <h1> elements in the document body
+    console.log(byTagName(document.body, "h1").length);
+    // → 1
+
+    // Log the number of <span> elements in the document body
+    console.log(byTagName(document.body, "span").length);
+    // → 3
+
+    // Find the first <p> element and log the number of <span> elements within it
+    let para = document.querySelector("p");
+    console.log(byTagName(para, "span").length);
+    // → 2
+</script>
+
+<p></p>
+<p>___________________________________</p>
+<p></p>
+
+<!-- The Cat's Hat-->
+<!doctype html>
+
+<style>body { min-height: 200px }</style>
+<img src="img/cat.png" id="cat" style="position: absolute">
+<img src="img/hat.png" id="hat" style="position: absolute">
+
+<script>
+    // Select the cat and hat images by their IDs
+    let cat = document.querySelector("#cat");
+    let hat = document.querySelector("#hat");
+
+    // Initialize the angle and lastTime variables for animation
+    let angle = 0;
+    let lastTime = null;
+
+    // Function to animate the cat's movement
+    function animate(time) {
+        // Update the angle based on the time elapsed since the last frame
+        if (lastTime != null) angle += (time - lastTime) * 0.001;
+        lastTime = time;
+
+        // Calculate the new position of the cat using sine and cosine functions
+        cat.style.top = (Math.sin(angle) * 40 + 40) + "px";
+        cat.style.left = (Math.cos(angle) * 200 + 230) + "px";
+
+        // Your extensions here.
+
+        // Request the next animation frame
+        requestAnimationFrame(animate);
+    }
+
+    // Start the animation
+    requestAnimationFrame(animate);
+</script>
+</script>
+
+
+
+
