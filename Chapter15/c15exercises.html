@@ -1,1 +1,64 @@
-<!---->
+<!--Chapter 15 Exercises-->
+
+<!--Balloon-->
+
+<html>
+  <body>
+    <p id="balloon">🎈</p>
+    <script>
+      let balloon = document.getElementById("balloon");
+      let size = 12;
+      document.body.addEventListener("keydown", function (event) {
+        if (event.key == "ArrowUp") {
+          size += 5;
+          balloon.style.fontSize = size + "px";
+          event.preventDefault();
+        } else if (event.key == "ArrowDown") {
+          size -= 5;
+          balloon.style.fontSize = size + "px";
+          event.preventDefault();
+        }
+        if (size > 100) {
+          balloon.textContent = "💥";
+          document.removeEventListener("keydown", event);
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<!--Mouse Trail-->
+
+<html>
+  <body>
+    <style>
+      .trail {
+        position: absolute;
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
+        background:teal
+      }
+      body {
+        height: 300px;
+      }
+    </style>
+    <script>
+        let dots = [];
+        let trail = document.querySelector(".trail");
+        window.addEventListener("mousemove", event => {
+          let dot = document.createElement("div");
+          dot.className = "trail";
+          dot.style.left = (event.pageX - 3) + "px";
+          dot.style.top = (event.pageY - 3) + "px";
+          document.body.appendChild(dot);
+          dots.push(dot);
+          if (dots.length > 20) {
+            dots.shift().remove();
+          }
+        });
+    </script>
+  </body>
+</html>
+
+<!--see tabs.html for code-->
