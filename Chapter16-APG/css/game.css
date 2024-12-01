@@ -36,3 +36,7 @@
 .won .player {
   box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
+
+.monster {
+  background: purple;
+}

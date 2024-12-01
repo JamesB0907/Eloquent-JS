@@ -143,6 +143,43 @@ const levelChars = {
     console.log(`${simpleLevel.width} by ${simpleLevel.height}`);
     */
 // → 22 by 9
+const monsterSpeed = 4;
+
+class Monster {
+  constructor(pos) {
+    this.pos = pos;
+  }
+
+  get type() {
+    return "monster";
+  }
+
+  static create(pos) {
+    return new Monster(pos.plus(new Vec(0, -1)));
+  }
+
+  update(time, state) {
+    let player = state.player;
+    let speed = this.pos.x < player.pos.x ? monsterSpeed : -monsterSpeed;
+    let newPos = new Vec(this.pos.x + time * speed, this.pos.y);
+    if (state.level.touches(newPos, this.size, "wall")) return this;
+    else return new Monster(newPos);
+  }
+
+  collide(state) {
+    let player = state.player;
+    if (player.pos.y + player.size.y < this.pos.y + 0.5) {
+      let filtered = state.actors.filter((a) => a != this);
+      return new State(state.level, filtered, state.status);
+    } else {
+      return new State(state.level, state.actors, "lost");
+    }
+  }
+}
+
+Monster.prototype.size = new Vec(1.2, 2);
+
+levelChars["M"] = Monster;
 
 //#endregion: Actors
 //#region: Drawing
@@ -364,6 +401,7 @@ function trackKeys(keys) {
   }
   window.addEventListener("keydown", track);
   window.addEventListener("keyup", track);
+  // This is added when the escHandler is added in order to remove the event listeners
   down.unregister = () => {
     window.removeEventListener("keydown", track);
     window.removeEventListener("keyup", track);
@@ -398,6 +436,7 @@ function runLevel(level, Display) {
   let running = "yes";
   
   return new Promise((resolve) => {
+    // Create a function to handle the escape key
     function escHandler(event) {
       if (event.key != "Escape") return;
       event.preventDefault();
@@ -410,6 +449,7 @@ function runLevel(level, Display) {
         running = "yes";
       }
     }
+    // Add the function to the event listener.
     window.addEventListener("keydown", escHandler);
     let arrowKeys = trackKeys(["ArrowLeft", "ArrowRight", "ArrowUp"]);
 
