@@ -1,0 +1,93 @@
+<!--Shapes-->
+
+    <canvas id="trapezoid"></canvas>
+    <canvas id="redDiamond"></canvas>
+    <canvas id="zigzig"></canvas>
+    <canvas id="spiral"></canvas>
+    <canvas id="yellowStar"></canvas>
+    <script>
+    let ctx = document.getElementById("trapezoid").getContext("2d");
+    function trapezoid (ctx, x, y, width, height) {
+        ctx.beginPath();
+        ctx.moveTo(x + width / 4, y);
+        ctx.lineTo(x + width * 3 / 4, y);
+        ctx.lineTo(x + width, y + height);
+        ctx.lineTo(x, y + height);
+        ctx.closePath();
+        ctx.stroke();
+    }
+    trapezoid(ctx, 10, 10, 100, 50);
+
+    let ctx2 = document.getElementById("redDiamond").getContext("2d");
+    function redDiamond (ctx2, x, y, width, height) {
+        ctx2.beginPath();
+        ctx2.moveTo(x, y + height / 2);
+        ctx2.lineTo(x + width / 2, y);
+        ctx2.lineTo(x + width, y + height / 2);
+        ctx2.lineTo(x + width / 2, y + height);
+        ctx2.closePath();
+        ctx2.fillStyle = "red";
+        ctx2.fill();
+        ctx2.rotate(0.5);
+    }
+    redDiamond(ctx2, 10, 10, 50, 100);
+
+    let ctx3 = document.getElementById("zigzig").getContext("2d");
+    function zigzag (ctx3, x, y, width, height) {
+        ctx3.beginPath();
+        ctx3.moveTo(x, y);
+        for (let i = 0; i < 8; i++) {
+            ctx3.lineTo(x + (i % 2) * width, y + i * height / 8);
+        }
+        ctx3.stroke();
+    }
+    zigzag(ctx3, 10, 10, 50, 100);
+
+    let ctx4 = document.getElementById("spiral").getContext("2d");
+    function spiral100 (ctx, x, y) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        for (let i = 0; i < 100; i++) {
+            let angle = i * Math.PI / 50;
+            let dist = i / 2;
+            ctx.lineTo(x + Math.cos(angle) * dist, y + Math.sin(angle) * dist);
+            ctx.moveTo(x + Math.cos(angle) * dist, y + Math.sin(angle) * dist);
+        }
+        ctx.stroke();
+    }
+    spiral100(ctx4, 100, 100);
+
+    let ctx5 = document.getElementById("yellowStar").getContext("2d");
+    function starYellow (ctx5, x, y, radius) {
+        ctx5.beginPath();
+        for (let i = 0; i < 5; i++) {
+            ctx5.lineTo(
+                x + radius * Math.cos((i * 2 * Math.PI / 5) - Math.PI / 2),
+                y + radius * Math.sin((i * 2 * Math.PI / 5) - Math.PI / 2)
+            );
+            ctx5.lineTo(
+                x + radius / 2 * Math.cos((i * 2 * Math.PI / 5 + Math.PI / 5) - Math.PI / 2),
+                y + radius / 2 * Math.sin((i * 2 * Math.PI / 5 + Math.PI / 5) - Math.PI / 2)
+            );
+        }
+        ctx5.closePath();
+        ctx5.fillStyle = "gold";
+        ctx5.fill();
+    }
+    starYellow(ctx5, 100, 100, 50);
+//     let ctx5 = document.getElementById("yellowStar").getContext("2d");
+//     function star(ctx5, x, y) {
+//     let radius = 50, xCenter = x + radius, yCenter = y + radius;
+//     ctx5.beginPath();
+//     ctx5.moveTo(xCenter + radius, yCenter);
+//     for (let i = 1; i <= 8; i++) {
+//       let angle = i * Math.PI / 4;
+//       ctx5.quadraticCurveTo(xCenter, yCenter,
+//                           xCenter + Math.cos(angle) * radius,
+//                           yCenter + Math.sin(angle) * radius);
+//     }
+//     ctx5.fillStyle = "gold";
+//     ctx5.fill();
+//   }
+//   star(ctx5, 440, 20);
+</script>
