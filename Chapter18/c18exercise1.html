@@ -1,0 +1,33 @@
+<!--Content Negotiation-->
+
+<script>
+    fetch("eloquentjavascript.net/author", {headers: {Accept: "text/plain"}})
+        .then((response) => {
+            console.log(response.status);
+            // → 200
+            console.log(response.headers.get("Content-Type"));
+            // → text/plain
+        });
+
+    fetch("eloquentjavascript.net/author", {headers: {Accept: "text/html"}})
+        .then((response) => {
+            console.log(response.status);
+            // → 200
+            console.log(response.headers.get("Content-Type"));
+            // → text/html
+        });
+
+    fetch("eloquentjavascript.net/author", {headers: {Accept: "application/json"}})
+        .then((response) => {
+            console.log(response.status);
+            // → 200
+            console.log(response.headers.get("Content-Type"));
+            // → application/json
+        });
+
+    fetch("eloquentjavascript.net/author", {headers: {Accept: "application/rainbows+unicorns"}})
+        .then((response) => {
+            console.log(response.status);
+            // → 406
+        });
+</script>
