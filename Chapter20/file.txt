@@ -1,3 +1,7 @@
 Hello, World!
 
 This is a simple line of text with a number: 42
+
+This one also has a number: 1800
+
+This one does not have a number
