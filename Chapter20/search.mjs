@@ -7,18 +7,20 @@
 
 // The search tool should take two command-line arguments: a file name and a regular expression. It should read the file and print all lines that match the regular expression.
 
-import {readFile} from 'fs/promises';
+import { readFile } from 'fs/promises';
 
-function searchFile(fileName, regex) {
-    // Read the file
-    let file = readFile(fileName, 'utf8');
-    let lines = file.split('\n');
+async function searchFile(fileName, regex) {
+  try {
+    const data = await readFile(fileName, 'utf8');
+    const lines = data.split('\n');
 
-    // Print lines that match the regular expression
-    let re = new RegExp(regex);
-    for (let line of lines) {
-        if (re.test(line)) {
-            console.log(line);
-        }
+    const re = new RegExp(regex);
+    for (const line of lines) {
+      if (re.test(line)) {
+        console.log(line);
+      }
     }
+  } catch (error) {
+    console.error('Error reading file:', error);
+  }
 }

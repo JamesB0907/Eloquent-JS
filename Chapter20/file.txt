@@ -1,3 +1,3 @@
 Hello, World!
 
-09/07/1988
+This is a simple line of text with a number: 42
