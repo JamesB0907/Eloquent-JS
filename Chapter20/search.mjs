@@ -24,3 +24,6 @@ async function searchFile(fileName, regex) {
     console.error('Error reading file:', error);
   }
 }
+
+const [fileName, regex] = process.argv.slice(2);
+searchFile(fileName, regex);
